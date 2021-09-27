@@ -7,10 +7,12 @@
   "author": "Anthony Tambrin",
   "scripts": {
     "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "postbuild": "ncp ./audio ./dist/audio --filter '**/*.*' && ncp ./img ./dist/img --filter '**/*.*'"
   },
   "dependencies": {
     "canvas-sketch-util": "1.10.0",
+    "ncp": "2.0.0",
     "parcel-bundler": "^1.6.1",
     "stats.js": "0.17.0",
     "tweakpane": "3.0.5"
