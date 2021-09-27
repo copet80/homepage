@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: black;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+a {
+  color: #ddddea;
+}
+
+#bgDiv,
+#fgDiv,
+#svgCanvas,
+#divCanvas,
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+#fgDiv,
+#bgDiv,
+#svgCanvas {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#svgCanvas line:not(.active) {
+  display: none;
+}
+
+.char {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 4px solid red;
+  pointer-events: none;
+}
+
+.explosion {
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 4px solid red;
+  pointer-events: none;
+}
+
+[data-line-renderer='0'] #svgCanvas,
+[data-char-renderer='0'][data-explosion-renderer='0'] #divCanvas {
+  display: none;
+}
+
+[data-char-renderer='1'][data-explosion-renderer='1'][data-line-renderer='1'] canvas {
+  display: none;
+}
+
+#artworksList,
+#songsList {
+  position: absolute;
+  left: 50%;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+#artworksList {
+  top: 0;
+}
+
+#songsList {
+  bottom: 0;
+}
+
+#artworksList li,
+#songsList li {
+  transition: opacity 0.3s, filter 0.3s;
+  position: absolute;
+  left: -120px;
+  width: 240px;
+  height: 240px;
+  border: 10px solid transparent;
+  list-style-type: none;
+}
+
+#artworksList li {
+  top: -130px;
+}
+
+#songsList li {
+  bottom: -130px;
+}
+
+#artworksList li div,
+#songsList li div {
+  transition: transform 0.3s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#artworksList li,
+#songsList li {
+  filter: grayscale(100%) brightness(50%);
+}
+
+#artworksList:hover li:hover,
+#artworksList li.selected,
+#songsList:hover li:hover,
+#songsList li.selected {
+  opacity: 1;
+  filter: none;
+}
+
+#songsList:hover li div,
+#artworksList:hover li div {
+  transform: translate(0, 0) !important;
+}
+
+#artworksLabel,
+#songsLabel {
+  transition: opacity 0.5s;
+  position: absolute;
+  pointer-events: none;
+  text-align: center;
+  opacity: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+#artworksLabel {
+  top: 130px;
+}
+
+#songsLabel {
+  bottom: 130px;
+}
+
+#artworksList:hover + #artworksLabel,
+#songsList:hover + #songsLabel {
+  opacity: 1 !important;
+}
+
+.artworkDescription,
+.songDescription {
+  transition: opacity 1s;
+  position: absolute;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.artworkDescription.selected,
+.songDescription.selected {
+  opacity: 1 !important;
+}
+
+.songDescription {
+  left: calc(50% + 340px);
+}
+
+.artworkDescription {
+  left: calc(30% - 340px);
+}
+
+.artworkDescription .content,
+.songDescription .content {
+  width: 100%;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.artworkDescription .content {
+  text-align: right;
+}
+
+/* Tweak pane */
+.tp-dfwv {
+  min-width: 300px;
+}
+/* Input and monitor view */
+.tp-lblv_v {
+  min-width: 180px;
+}
