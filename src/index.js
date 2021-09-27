@@ -15,7 +15,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 const DEBUG = false;
 
 let audioSource;
-let audioCtx;
 let audioData;
 let audioAnalyzer;
 
@@ -487,8 +486,8 @@ async function changeSong(song) {
   handleMusicPlay();
 }
 
-async function loadAudio(url) {
-  if (loadedSong) {
+function loadAudio(url) {
+  if (loadedSong && audio) {
     audio.pause();
   }
 
@@ -498,18 +497,29 @@ async function loadAudio(url) {
 
   loadedSong = null;
   if (!songAudios[url]) {
-    songAudios[url] = new Audio(url);
+    const newAudio = new Audio(url);
+    newAudio.crossOrigin = 'anonymous';
+    const newAudioCtx = new AudioContext();
+    const newAudioSource = newAudioCtx.createMediaElementSource(newAudio);
+    const newAudioAnalyzer = newAudioCtx.createAnalyser();
+    newAudioAnalyzer.fftSize = 2048;
+    newAudioSource.connect(newAudioAnalyzer);
+    newAudioSource.connect(newAudioCtx.destination);
+    const newAudioData = new Uint8Array(newAudioAnalyzer.frequencyBinCount);
+    songAudios[url] = {
+      audio: newAudio,
+      audioCtx: newAudioCtx,
+      audioSource: newAudioSource,
+      audioAnalyzer: newAudioAnalyzer,
+      audioData: newAudioData
+    };
   }
-  audio = songAudios[url];
-  audio.crossOrigin = 'anonymous';
-  audioCtx = new AudioContext();
-  audioAnalyzer = audioCtx.createAnalyser();
-  audioAnalyzer.fftSize = 2048;
-  audioSource = audioCtx.createMediaElementSource(audio);
-  audioSource.connect(audioAnalyzer);
-  audioSource.connect(audioCtx.destination);
-  audioData = new Uint8Array(audioAnalyzer.frequencyBinCount);
+  audio = songAudios[url].audio;
+  audioSource = songAudios[url].audioSource;
+  audioAnalyzer = songAudios[url].audioAnalyzer;
+  audioData = songAudios[url].audioData;
 
+  console.log(url, audio.duration);
   audio.currentTime = 0;
   audio.play();
   loadedSong = url;
