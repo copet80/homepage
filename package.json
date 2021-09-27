@@ -1,8 +1,10 @@
 {
-  "name": "homepage-2",
+  "name": "homepage",
   "version": "1.0.0",
-  "description": "",
+  "description": "Playground containing Anthony Tambrin's personal coding works, music arrangements and compositions, artworks and illustrations.",
   "main": "index.html",
+  "license": "UNLICENSED",
+  "author": "Anthony Tambrin",
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html"
