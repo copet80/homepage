@@ -21,15 +21,34 @@ export function roundRect(ctx, x, y, width, height, radius = 5) {
   ctx.lineTo(x + width - radius.tr, y);
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
   ctx.lineTo(x + width, y + height - radius.br);
-  ctx.quadraticCurveTo(
-    x + width,
-    y + height,
-    x + width - radius.br,
-    y + height,
-  );
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
   ctx.lineTo(x + radius.bl, y + height);
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
   ctx.lineTo(x, y + radius.tl);
   ctx.quadraticCurveTo(x, y, x + radius.tl, y);
   ctx.closePath();
+}
+
+export function getNoiseColor(value) {
+  const b = Math.sin(value * Math.PI) * 255;
+  const g = Math.sin(Math.PI * 0.5 + value * Math.PI) * 255;
+  const r = Math.cos(Math.PI + value * Math.PI) * 255;
+  return [r, g, b];
+}
+
+export function getRandomColor() {
+  const colorRandom = Math.floor(Math.random() * 3);
+  return [
+    colorRandom === 0 ? 0 : 155 + Math.floor(Math.random() * 100),
+    colorRandom === 1 ? 0 : 155 + Math.floor(Math.random() * 100),
+    colorRandom === 2 ? 0 : 155 + Math.floor(Math.random() * 100)
+  ];
+}
+
+export function getRandomColors(count = 5) {
+  const colors = [];
+  for (let i = 0; i < count; i++) {
+    colors.push(getRandomColor());
+  }
+  return colors;
 }

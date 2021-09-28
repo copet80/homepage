@@ -14,6 +14,7 @@
     "canvas-sketch-util": "1.10.0",
     "ncp": "2.0.0",
     "parcel-bundler": "^1.6.1",
+    "regenerator-runtime": "0.13.9",
     "stats.js": "0.17.0",
     "tweakpane": "3.0.5"
   },
@@ -23,5 +24,6 @@
   "resolutions": {
     "@babel/preset-env": "7.13.8"
   },
+  "browserslist": ["last 1 Chrome version"],
   "keywords": []
 }
