@@ -2,6 +2,7 @@ export const DEBUG = true;
 
 export const RENDER_CANVAS = 0;
 export const RENDER_CSS = 1;
+export const RENDER_WEBGL = 2;
 
 export const MODE_WANDER = 0;
 export const MODE_FLOCK = 1;

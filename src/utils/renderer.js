@@ -40,6 +40,19 @@ export function renderCharacterCss(char, $chars) {
   }
 }
 
+export function renderCharacterWebGL(char, mesh) {
+  const [r, g, b] = char.color;
+  const rad = char.radius;
+  const circ = rad * 2;
+  // const shapeStep = char.shapeStep;
+  const x = char.x;
+  const y = char.y;
+  mesh.position.x = x;
+  mesh.position.y = y;
+  mesh.scale.x = mesh.scale.y = circ / 30;
+  mesh.material.color.setRGB(r, g, b);
+}
+
 export function renderExplosionCanvas(explosion, fgCanvasCtx) {
   const x = explosion.x;
   const y = explosion.y;
