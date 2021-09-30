@@ -1,4 +1,5 @@
 import { random } from 'canvas-sketch-util';
+import * as THREE from 'three';
 
 import { EDGE_WRAP } from '../core/MovingObject';
 import ShapeShifter from '../core/ShapeShifter';
@@ -48,8 +49,9 @@ export function initLines($svgCanvas, charsLen) {
   };
 }
 
-export function initCharacters($divCanvas, charsLen, vw, vh, minSpeed, maxSpeed, boundary) {
+export function initCharacters($divCanvas, scene3d, charsLen, vw, vh, minSpeed, maxSpeed, boundary) {
   const arr = [];
+  const arr3d = [];
   const map = {};
 
   for (let i = 0; i < charsLen; i++) {
@@ -74,10 +76,17 @@ export function initCharacters($divCanvas, charsLen, vw, vh, minSpeed, maxSpeed,
     $char.className = 'char';
     $divCanvas.appendChild($char);
     map[charId] = $char;
+
+    const geometry = new THREE.RingGeometry(radius * 0.8, radius, 16);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const mesh = new THREE.Mesh(geometry, material);
+    arr3d.push(mesh);
+    scene3d.add(mesh);
   }
 
   return {
     arr,
+    arr3d,
     map
   };
 }
@@ -194,4 +203,33 @@ export function initSongs(songs, $songsList, onItemClick) {
       onItemClick(song.src);
     });
   });
+}
+
+export function init3d(insertBefore, ringsLen) {
+  const { innerWidth, innerHeight } = window;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true
+  });
+  renderer.setSize(innerWidth, innerHeight);
+  if (insertBefore) {
+    document.body.insertBefore(renderer.domElement, insertBefore);
+  } else {
+    document.body.appendChild(renderer.domElement);
+  }
+
+  camera.position.x = innerWidth * 0.5;
+  camera.position.y = innerHeight * 0.5;
+  camera.position.z = 500;
+
+  return {
+    camera,
+    scene,
+    render: () => {
+      renderer.render(scene, camera);
+    }
+  };
 }

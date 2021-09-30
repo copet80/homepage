@@ -1,6 +1,6 @@
 import { Pane } from 'tweakpane';
 import { ARTWORKS } from '../constants/artworks';
-import { MODE_FLOCK, MODE_GRID, MODE_WANDER, RENDER_CANVAS, RENDER_CSS } from '../constants/general';
+import { MODE_FLOCK, MODE_GRID, MODE_WANDER, RENDER_CANVAS, RENDER_CSS, RENDER_WEBGL } from '../constants/general';
 import { SONGS } from '../constants/songs';
 
 export function initTweakPane(params, { onMusicPlay, onMusicPause, onArtworkShow, onArtworkHide, onPaneChange }) {
@@ -14,21 +14,24 @@ export function initTweakPane(params, { onMusicPlay, onMusicPause, onArtworkShow
     label: 'Agents',
     options: {
       canvas: RENDER_CANVAS,
-      css: RENDER_CSS
+      css: RENDER_CSS,
+      webGL: RENDER_WEBGL
     }
   });
   rendererFolder.addInput(params, 'lineRenderer', {
     label: 'Lines',
     options: {
       canvas: RENDER_CANVAS,
-      css: RENDER_CSS
+      css: RENDER_CSS,
+      webGL: RENDER_WEBGL
     }
   });
   rendererFolder.addInput(params, 'explosionRenderer', {
     label: 'Explosions',
     options: {
       canvas: RENDER_CANVAS,
-      css: RENDER_CSS
+      css: RENDER_CSS,
+      webGL: RENDER_WEBGL
     }
   });
 

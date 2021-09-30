@@ -21,13 +21,15 @@ import {
   NUM_CHAR_COLS,
   NUM_EXPLOSIONS,
   RENDER_CANVAS,
-  RENDER_CSS
+  RENDER_CSS,
+  RENDER_WEBGL
 } from './constants/general';
-import { initArtworks, initCharacters, initExplosions, initLines, initSongs } from './utils/initializer';
+import { initArtworks, initCharacters, initExplosions, initLines, initSongs, init3d } from './utils/initializer';
 import {
   renderAudioVisualizer,
   renderCharacterCanvas,
   renderCharacterCss,
+  renderCharacterWebGL,
   renderExplosionCanvas,
   renderExplosionCss,
   renderLineCanvas,
@@ -69,6 +71,7 @@ let artworkAssets = {};
 let explosions = [];
 let $explosions = {};
 let chars = [];
+let chars3d = [];
 let $chars = {};
 let $lines = {};
 let songAudios = {};
@@ -83,6 +86,9 @@ let analyzedAudioData = [];
 let isViewingArtwork = false;
 let medResImage = null;
 let selectedArtwork = null;
+let render3d = null;
+let scene3d = null;
+let camera3d = null;
 
 const tweakParams = {
   charRenderer,
@@ -101,11 +107,18 @@ const tweakParams = {
 
 function init() {
   resize();
+
+  const result3d = init3d($fgCanvas);
+  render3d = result3d.render;
+  camera3d = result3d.camera;
+  scene3d = result3d.scene;
+
   initSongs(SONGS, $songsList, changeSong);
   artworkAssets = initArtworks(ARTWORKS, $artworksList, (artwork) => changeArtwork(artwork, true));
 
   const charsResult = initCharacters(
     $divCanvas,
+    scene3d,
     NUM_CHARS,
     vw,
     vh,
@@ -115,6 +128,7 @@ function init() {
   );
   $chars = charsResult.map;
   chars = charsResult.arr;
+  chars3d = charsResult.arr3d;
   charsLen = chars.length;
 
   const linesResult = initLines($svgCanvas, charsLen);
@@ -475,6 +489,8 @@ function updateCharacters() {
       renderCharacterCanvas(char, fgCanvasCtx);
     } else if (charRenderer === RENDER_CSS) {
       renderCharacterCss(char, $chars);
+    } else if (charRenderer === RENDER_WEBGL) {
+      renderCharacterWebGL(char, chars3d[i]);
     }
   }
 
@@ -625,6 +641,10 @@ function update() {
 
   if (DEBUG) {
     stats.end();
+  }
+
+  if (charRenderer === RENDER_WEBGL || explosionRenderer === RENDER_WEBGL || lineRenderer === RENDER_WEBGL) {
+    render3d();
   }
 
   window.requestAnimationFrame(update);
