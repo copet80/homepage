@@ -1,7 +1,7 @@
 {
-  "name": "homepage",
+  "name": "homepage-main-branch",
   "version": "1.0.0",
-  "description": "Playground containing Anthony Tambrin's personal coding works, music arrangements and compositions, artworks and illustrations.",
+  "description": "",
   "main": "index.html",
   "license": "UNLICENSED",
   "author": "Anthony Tambrin",
@@ -24,6 +24,8 @@
   "resolutions": {
     "@babel/preset-env": "7.13.8"
   },
-  "browserslist": ["last 1 Chrome version"],
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
   "keywords": []
 }

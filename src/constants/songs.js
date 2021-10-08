@@ -6,6 +6,12 @@ export const SONGS = [
     thumb: '/img/ALittleAdventure-thumb.jpg'
   },
   {
+    id: 'FlashesOfMemories',
+    title: 'Flashes of Memories',
+    src: '/audio/Flashes of Memories.mp3',
+    thumb: '/img/FlashesOfMemories-thumb.jpg'
+  },
+  {
     id: 'GrooveAndSmile',
     title: 'Groove and Smile',
     src: '/audio/Groove and Smile.mp3',

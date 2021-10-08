@@ -1,4 +1,4 @@
-export const DEBUG = true;
+export const DEBUG = false;
 
 export const RENDER_CANVAS = 0;
 export const RENDER_CSS = 1;
